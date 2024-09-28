@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx cypress open"
+    "test": "npx cypress open",
+    "format": "prettier --write .",
+    "lint": "eslint ./cypress/e2e/*.js"
   },
   "keywords": [],
   "author": "",

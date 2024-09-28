@@ -3,9 +3,9 @@ describe('Crawl Bahmutov blog pages', () => {
   it('Visit every link from the repos list', () => {
     cy.viewport(1920, 1080)
     cy.visit('https://glebbahmutov.com/blog/index.html')
-    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+    const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
     let height = 0
-    const scrolltoBottom = async (window) => {
+    const scrolltoBottom = async window => {
       if (height >= document.body.scrollHeight) {
         return
       }
@@ -14,7 +14,7 @@ describe('Crawl Bahmutov blog pages', () => {
       height += 100
       return scrolltoBottom(window)
     }
-    cy.window().then(async (window) => {
+    cy.window().then(async window => {
       await scrolltoBottom(window)
     })
     cy.contains('a', 'Next ➡').as('nextPage')
@@ -23,12 +23,14 @@ describe('Crawl Bahmutov blog pages', () => {
     function crawl() {
       cy.get('[itemprop="name"] a')
         .should('have.length.greaterThan', 1)
-        .then(($links) => {
+        .then($links => {
           links.push(
-            ...$links.toArray().map((link) => {
+            ...$links.toArray().map(link => {
               const obj = {
                 title: link.innerHTML,
-                link: `https://glebbahmutov.com/blog/${link.getAttribute('href').replace('../../', '')}`
+                link: `https://glebbahmutov.com/blog/${link
+                  .getAttribute('href')
+                  .replace('../../', '')}`
               }
               return obj
             })
@@ -37,7 +39,7 @@ describe('Crawl Bahmutov blog pages', () => {
       cy.contains('a', 'Next ➡')
         .should(() => {})
         .its('length')
-        .then((length) => {
+        .then(length => {
           if (length > 0) {
             cy.get('@nextPage').click().then(crawl)
           } else {
@@ -46,7 +48,7 @@ describe('Crawl Bahmutov blog pages', () => {
         })
     }
     crawl()
-    cy.wrap(links).then((links) => {
+    cy.wrap(links).then(links => {
       cy.writeFile('links.json', links)
       console.log(JSON.stringify(links, null, 2))
     })
