@@ -22,7 +22,7 @@ describe(
       let token = ''
       let contactId = ''
     })
-    it(`register new user`, function () {
+    it(`POST register new user`, function () {
       cy.api({
         method: 'POST',
         url: apiURL + '/users',
@@ -40,7 +40,7 @@ describe(
         this.token = response.body.token
       })
     })
-    it(`login registered user`, function () {
+    it(`POST login registered user`, function () {
       cy.api({
         method: 'POST',
         url: apiURL + '/users/login',
@@ -56,7 +56,7 @@ describe(
         this.token = response.body.token
       })
     })
-    it(`create contact`, function () {
+    it(`POST create contact`, function () {
       cy.api({
         method: 'POST',
         url: apiURL + '/contacts',
@@ -84,7 +84,7 @@ describe(
         this.contactId = response.body._id
       })
     })
-    it(`get user contacts`, function () {
+    it(`GET user contacts`, function () {
       cy.api({
         method: 'GET',
         url: apiURL + '/contacts',
@@ -96,7 +96,7 @@ describe(
         expect(response.body.length).to.eq(1)
       })
     })
-    it(`get single contact`, function () {
+    it(`GET single contact`, function () {
       cy.api({
         method: 'GET',
         url: apiURL + '/contacts/' + this.contactId,
@@ -120,7 +120,7 @@ describe(
         expect(response.body).to.have.property('country', contact1.country)
       })
     })
-    it(`update contact`, function () {
+    it(`PUT update contact`, function () {
       cy.api({
         method: 'PUT',
         url: apiURL + '/contacts/' + this.contactId,
@@ -156,7 +156,7 @@ describe(
         expect(response.body).to.have.property('country', contact2.country)
       })
     })
-    it(`get contacts after update`, function () {
+    it(`GET contacts after update`, function () {
       cy.api({
         method: 'GET',
         url: apiURL + '/contacts',
@@ -187,7 +187,7 @@ describe(
         expect(response.body[0]).to.have.property('country', contact2.country)
       })
     })
-    it(`get contact after update`, function () {
+    it(`GET contact after update`, function () {
       cy.api({
         method: 'GET',
         url: apiURL + '/contacts/' + this.contactId,
@@ -211,7 +211,7 @@ describe(
         expect(response.body).to.have.property('country', contact2.country)
       })
     })
-    it(`patch contact`, function () {
+    it(`PATCH contact`, function () {
       cy.api({
         method: 'PATCH',
         url: apiURL + '/contacts/' + this.contactId,
@@ -241,7 +241,7 @@ describe(
         expect(response.body).to.have.property('country', contact2.country)
       })
     })
-    it(`get contacts after patch`, function () {
+    it(`GET contacts after patch`, function () {
       cy.api({
         method: 'GET',
         url: apiURL + '/contacts',
@@ -269,7 +269,7 @@ describe(
         expect(response.body[0]).to.have.property('country', contact2.country)
       })
     })
-    it(`get contact after patch`, function () {
+    it(`GET contact after patch`, function () {
       cy.api({
         method: 'GET',
         url: apiURL + '/contacts/' + this.contactId,
@@ -293,7 +293,7 @@ describe(
         expect(response.body).to.have.property('country', contact2.country)
       })
     })
-    it(`delete contact`, function () {
+    it(`DELETE contact`, function () {
       cy.api({
         method: 'DELETE',
         url: apiURL + '/contacts/' + this.contactId,
@@ -304,7 +304,7 @@ describe(
         expect(response.status).to.eq(200)
       })
     })
-    it(`get contacts after delete`, function () {
+    it(`GET contacts after delete`, function () {
       cy.api({
         method: 'GET',
         url: apiURL + '/contacts',
@@ -316,7 +316,7 @@ describe(
         expect(response.body.length).to.eq(0)
       })
     })
-    it(`get contact after delete`, function () {
+    it(`GET contact after delete`, function () {
       cy.api({
         method: 'GET',
         url: apiURL + '/contacts/' + this.contactId,
@@ -328,7 +328,7 @@ describe(
         expect(response.status).to.eq(404)
       })
     })
-    it(`delete registered user`, function () {
+    it(`DELETE registered user`, function () {
       cy.api({
         method: 'DELETE',
         url: apiURL + '/users/me',
@@ -339,7 +339,7 @@ describe(
         expect(response.status).to.eq(200)
       })
     })
-    it(`get user profile after delete`, function () {
+    it(`GET user profile after delete`, function () {
       cy.api({
         method: 'GET',
         url: apiURL + '/users/me',

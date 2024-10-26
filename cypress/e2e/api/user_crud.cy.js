@@ -19,7 +19,7 @@ describe(
     before(() => {
       let token = ''
     })
-    it(`register new user`, function () {
+    it(`POST register new user`, function () {
       cy.api({
         method: 'POST',
         url: apiURL + '/users',
@@ -37,7 +37,7 @@ describe(
         this.token = response.body.token
       })
     })
-    it(`login registered user`, function () {
+    it(`POST login registered user`, function () {
       cy.api({
         method: 'POST',
         url: apiURL + '/users/login',
@@ -53,7 +53,7 @@ describe(
         this.token = response.body.token
       })
     })
-    it(`get user profile`, function () {
+    it(`GET user profile`, function () {
       cy.api({
         method: 'GET',
         url: apiURL + '/users/me',
@@ -68,7 +68,7 @@ describe(
         expect(response.body).to.have.property('email', user.email)
       })
     })
-    it(`update user profile`, function () {
+    it(`PATCH update user profile`, function () {
       cy.api({
         method: 'PATCH',
         url: apiURL + '/users/me',
@@ -88,7 +88,7 @@ describe(
         expect(response.body).to.have.property('email', user.email)
       })
     })
-    it(`logout user`, function () {
+    it(`POST logout user`, function () {
       cy.api({
         method: 'POST',
         url: apiURL + '/users/logout',
@@ -99,7 +99,7 @@ describe(
         expect(response.status).to.eq(200)
       })
     })
-    it(`get user profile after logout`, function () {
+    it(`GET user profile after logout`, function () {
       cy.api({
         method: 'GET',
         url: apiURL + '/users/me',
@@ -111,7 +111,7 @@ describe(
         expect(response.status).to.eq(401)
       })
     })
-    it(`login and get updated user`, function () {
+    it(`POST login and get updated user`, function () {
       cy.api({
         method: 'POST',
         url: apiURL + '/users/login',
@@ -127,7 +127,7 @@ describe(
         this.token = response.body.token
       })
     })
-    it(`delete user`, function () {
+    it(`DELETE user`, function () {
       cy.api({
         method: 'DELETE',
         url: apiURL + '/users/me',
@@ -138,7 +138,7 @@ describe(
         expect(response.status).to.eq(200)
       })
     })
-    it(`get user profile after delete`, function () {
+    it(`GET user profile after delete`, function () {
       cy.api({
         method: 'GET',
         url: apiURL + '/users/me',
