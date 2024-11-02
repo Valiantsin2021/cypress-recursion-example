@@ -36,7 +36,7 @@ describe('Crawl Bahmutov blog pages', () => {
             })
           )
         })
-      cy.contains('a', 'Next ➡')
+      cy.get('@nextPage')
         .should(() => {})
         .its('length')
         .then(length => {

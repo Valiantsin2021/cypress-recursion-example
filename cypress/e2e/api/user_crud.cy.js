@@ -1,8 +1,9 @@
 /// <reference types="cypress" />
+import 'cypress-ajv-schema-validator'
 import 'cypress-plugin-api'
 import { user } from '../../../utils/dataFactory.js'
 const apiURL = 'https://thinking-tester-contact-list.herokuapp.com'
-
+const registerUserSchema = require('../../fixtures/register_user_schema.json')
 describe(
   'Cypress: thinking-tester-contact-list user API',
   {
@@ -29,13 +30,18 @@ describe(
           email: user.email,
           password: user.password
         }
-      }).then(response => {
-        expect(response.status).to.eq(201)
-        expect(response.body.user).to.have.property('firstName', user.firstName)
-        expect(response.body.user).to.have.property('lastName', user.lastName)
-        expect(response.body.user).to.have.property('email', user.email)
-        this.token = response.body.token
       })
+        .validateSchema(registerUserSchema)
+        .then(response => {
+          expect(response.status).to.eq(201)
+          expect(response.body.user).to.have.property(
+            'firstName',
+            user.firstName
+          )
+          expect(response.body.user).to.have.property('lastName', user.lastName)
+          expect(response.body.user).to.have.property('email', user.email)
+          this.token = response.body.token
+        })
     })
     it(`POST login registered user`, function () {
       cy.api({
